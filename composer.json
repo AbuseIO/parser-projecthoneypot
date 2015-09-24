@@ -1,16 +1,6 @@
 {
     "name": "abuseio/parser-projecthoneypot",
     "description": "Parser addon for handling notifications from projecthoneypot",
-    "license": "GPL-2.0",
-    "require": {
-        "php": ">=5.4.0",
-        "abuseio/parser-common": "dev-master"
-    }
-}
-
-{
-    "name": "abuseio/parser-projecthoneypot",
-    "description": "Parser addon for handling notifications from projecthoneypot",
     "version": "1.0.0-dev",
     "keywords": ["laravel", "abuseio", "parser", "projecthoneypot"],
     "homepage": "http://abuse.io",
