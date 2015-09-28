@@ -48,6 +48,7 @@ class Projecthoneypot extends Parser
             $match
         );
         array_shift($match);
+        $reports = [ ];
         while (sizeof($match[0]) > 0) {
             $reports[] = [
                 'Source' => array_shift($match[0]),
@@ -56,34 +57,37 @@ class Projecthoneypot extends Parser
             ];
         }
 
-        // Loop through all reported issues
         foreach ($reports as $report) {
-            $feedName = $report['Type'];
+            $this->feedName = $report['Type'];
 
-            // If feed is known and enabled, validate data and save report
-            if ($this->isKnownFeed($feedName) && $this->isEnabledFeed($feedName)) {
-                // Sanity checks (skip if required fields are unset)
-                if ($this->hasRequiredFields($feedName, $report) === true) {
-                    $events[] = [
-                        'source'        => config("{$this->configBase}.parser.name"),
-                        'ip'            => $report['Source'],
-                        'domain'        => false,
-                        'uri'           => false,
-                        'class'         => config("{$this->configBase}.feeds.{$feedName}.class"),
-                        'type'          => config("{$this->configBase}.feeds.{$feedName}.type"),
-                        'timestamp'     => strtotime($report['Date']),
-                        'information'   => json_encode($report),
-                    ];
-                } else {
-                    return $this->failed(
-                        "Required field {$this->requiredField} is missing in the report or config is incorrect."
-                    );
-                }
-            } else {
+            if (!$this->isKnownFeed()) {
                 return $this->failed(
-                    "Detected feed '{$feedName}' is unknown or disabled."
+                    "Detected feed {$this->feedName} is unknown."
                 );
             }
+
+            if (!$this->isEnabledFeed()) {
+                continue;
+            }
+
+            if (!$this->hasRequiredFields($report)) {
+                return $this->failed(
+                    "Required field {$this->requiredField} is missing or the config is incorrect."
+                );
+            }
+
+            $report = $this->applyFilters($report);
+
+            $events[] = [
+                'source'        => config("{$this->configBase}.parser.name"),
+                'ip'            => $report['Source'],
+                'domain'        => false,
+                'uri'           => false,
+                'class'         => config("{$this->configBase}.feeds.{$this->feedName}.class"),
+                'type'          => config("{$this->configBase}.feeds.{$this->feedName}.type"),
+                'timestamp'     => strtotime($report['Date']),
+                'information'   => json_encode($report),
+            ];
         }
 
         return $this->success($events);
