@@ -36,8 +36,8 @@ class Projecthoneypot extends Parser
             }
 
             foreach ($reports as $report) {
-                if (!empty($report['Report-Type'])) {
-                    $this->feedName = $report['Report-Type'];
+                if (!empty($report['Type'])) {
+                    $this->feedName = $report['Type'];
 
                     // If feed is known and enabled, validate data and save report
                     if ($this->isKnownFeed() && $this->isEnabledFeed()) {
