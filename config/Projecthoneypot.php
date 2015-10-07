@@ -10,52 +10,54 @@ return [
         'body_map'      => [
             //
         ],
+        'aliases'       => [
+            'H'         => 'Harvesting',
+            'S'         => 'Email',
+            'D'         => 'Dictionary',
+            'C'         => 'Comment',
+            'R'         => 'Potentially',
+        ],
     ],
 
     'feeds' => [
-        'H' => [
+        'Harvesting' => [
             'class'     => 'Harvesting',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                'Source',
-                'Date',
+                'ip',
             ],
         ],
-        'S' => [
+        'Email' => [
             'class'     => 'SPAM',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                'Source',
-                'Date',
+                'ip',
             ],
         ],
-        'D' => [
+        'Dictionary' => [
             'class'     => 'Dictionary attack',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                'Source',
-                'Date',
+                'ip',
             ],
         ],
-        'C' => [
+        'Comment' => [
             'class'     => 'Comment Spam',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                'Source',
-                'Date',
+                'ip',
             ],
         ],
-        'R' => [
-            'class'     => 'Rule Breaker',
+        'Potentially' => [
+            'class'     => 'Harvesting',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
-                'Source',
-                'Date',
+                'ip',
             ],
         ],
     ],
