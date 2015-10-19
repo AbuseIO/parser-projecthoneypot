@@ -88,7 +88,34 @@ class Projecthoneypot extends Parser
                     'timestamp' => strtotime(array_shift($matches[2])),
                 ];
             }
+        } elseif (preg_match_all(
+            // Match ipv6
+            '/^(?>(?>([a-f0-9]{1,4})(?>:(?1)){7}|(?!(?:.*[a-f0-9](?>:|$)){8,})((?1)(?>:(?1)){0,6})?::(?2)?)'.
+            '|(?>(?>(?1)(?>:(?1)){5}:|(?!(?:.*[a-f0-9]:){6,})(?3)?::(?>((?1)(?>:(?1)){0,4}):)?)'.
+            '?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3}))/im',
+            $this->parsedMail->getMessageBody(),
+            $ipv6matches
+        )) {
+            // Get the ClassType and Date/Time
+            $ipv6matches = array_shift($ipv6matches);
+            preg_match_all(
+                '/^(?>(?>([a-f0-9]{1,4})(?>:(?1)){7}|(?!(?:.*[a-f0-9](?>:|$)){8,})((?1)(?>:(?1)){0,6})?::(?2)?)'.
+                '|(?>(?>(?1)(?>:(?1)){5}:|(?!(?:.*[a-f0-9]:){6,})(?3)?::(?>((?1)(?>:(?1)){0,4}):)?)'.
+                '?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3})) \(([HSDCR])\)\r?\n  \- ([\w, :]+)\r?\n/im',
+                $this->parsedMail->getMessageBody(),
+                $matches
+            );
+            array_shift($matches);
 
+            // Combine the data from both regexp's and construct a ready to use array to create a report.
+            $report_data = array_merge([$ipv6matches], [$matches[4]], [$matches[5]]);
+            while (sizeof($report_data[0]) > 0) {
+                $reports[] = [
+                    'ip' => array_shift($report_data[0]),
+                    'feed' => config("{$this->configBase}.parser.aliases")[array_shift($report_data[1])],
+                    'timestamp' => strtotime(array_shift($report_data[2])),
+                ];
+            }
         } else {
             /*
              * Finally we just give up raising a warning.
