@@ -2,10 +2,17 @@
 
 namespace AbuseIO\Parsers;
 
+/**
+ * Class Projecthoneypot
+ * @package AbuseIO\Parsers
+ */
 class Projecthoneypot extends Parser
 {
     /**
      * Create a new Projecthoneypot instance
+     *
+     * @param \PhpMimeMailParser\Parser $parsedMail phpMimeParser object
+     * @param array $arfMail array with ARF detected results
      */
     public function __construct($parsedMail, $arfMail)
     {
@@ -14,7 +21,7 @@ class Projecthoneypot extends Parser
 
     /**
      * Parse attachments
-     * @return Array    Returns array with failed or success data
+     * @return array    Returns array with failed or success data
      *                  (See parser-common/src/Parser.php) for more info.
      */
     public function parse()
