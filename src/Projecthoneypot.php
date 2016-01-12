@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+use AbuseIO\Models\Incident;
 
 /**
  * Class Projecthoneypot
@@ -142,16 +143,19 @@ class Projecthoneypot extends Parser
                             // Event has all requirements met, filter and add!
                             $report = $this->applyFilters($report);
 
-                            $this->events[] = [
-                                'source' => config("{$this->configBase}.parser.name"),
-                                'ip' => $report['ip'],
-                                'domain' => false,
-                                'uri' => false,
-                                'class' => config("{$this->configBase}.feeds.{$this->feedName}.class"),
-                                'type' => config("{$this->configBase}.feeds.{$this->feedName}.type"),
-                                'timestamp' => $report['timestamp'],
-                                'information' => json_encode($report),
-                            ];
+                            $incident = new Incident();
+                            $incident->source      = config("{$this->configBase}.parser.name");
+                            $incident->source_id   = false;
+                            $incident->ip          = $report['ip'];
+                            $incident->domain      = false;
+                            $incident->uri         = false;
+                            $incident->class       = config("{$this->configBase}.feeds.{$this->feedName}.class");
+                            $incident->type        = config("{$this->configBase}.feeds.{$this->feedName}.type");
+                            $incident->timestamp   = $report['timestamp'];
+                            $incident->information = json_encode($report);
+
+                            $this->events[] = $incident;
+
                         }
                     }
                 }
