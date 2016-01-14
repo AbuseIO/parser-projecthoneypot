@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+
 use AbuseIO\Models\Incident;
 
 /**
@@ -55,7 +56,7 @@ class Projecthoneypot extends Parser
             ) {
                 /*
                  * Free reports hold hold a timestamp, so need to figure this out ourselves so we can still ignore
-                 * duplicates when saving the events.
+                 * duplicates when saving the incidents.
                  */
                 if (!empty($this->parsedMail->getHeader('date')) &&
                     ctype_digit(strtotime($this->parsedMail->getHeader('date'))) &&
@@ -140,7 +141,7 @@ class Projecthoneypot extends Parser
                     if ($this->isKnownFeed() && $this->isEnabledFeed()) {
                         // Sanity check
                         if ($this->hasRequiredFields($report) === true) {
-                            // Event has all requirements met, filter and add!
+                            // incident has all requirements met, filter and add!
                             $report = $this->applyFilters($report);
 
                             $incident = new Incident();
@@ -154,7 +155,7 @@ class Projecthoneypot extends Parser
                             $incident->timestamp   = $report['timestamp'];
                             $incident->information = json_encode($report);
 
-                            $this->events[] = $incident;
+                            $this->incidents[] = $incident;
 
                         }
                     }
