@@ -21,7 +21,7 @@ return [
 
     'feeds' => [
         'Harvesting' => [
-            'class'     => 'Harvesting',
+            'class'     => 'HARVESTING',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -37,7 +37,7 @@ return [
             ],
         ],
         'Dictionary' => [
-            'class'     => 'Dictionary attack',
+            'class'     => 'DICTIONARY_ATTACK',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -45,7 +45,7 @@ return [
             ],
         ],
         'Comment' => [
-            'class'     => 'Comment Spam',
+            'class'     => 'COMMENT_SPAM',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -53,7 +53,7 @@ return [
             ],
         ],
         'Potentially' => [
-            'class'     => 'Harvesting',
+            'class'     => 'HARVESTING',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
