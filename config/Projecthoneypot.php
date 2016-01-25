@@ -22,7 +22,7 @@ return [
     'feeds' => [
         'Harvesting' => [
             'class'     => 'HARVESTING',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -30,7 +30,7 @@ return [
         ],
         'Email' => [
             'class'     => 'SPAM',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -38,7 +38,7 @@ return [
         ],
         'Dictionary' => [
             'class'     => 'DICTIONARY_ATTACK',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -46,7 +46,7 @@ return [
         ],
         'Comment' => [
             'class'     => 'COMMENT_SPAM',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -54,7 +54,7 @@ return [
         ],
         'Potentially' => [
             'class'     => 'HARVESTING',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
